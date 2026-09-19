@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Header - Khatri Fashions</title>
+    <style>
+        /* Color Variables based on your Logo */
+        :root {
+            --navy-blue: #0b163a; 
+            --gold: #c29b57;
+            --bg-light: #f9f8f4;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+        }
+
+        /* Header Styling */
+        .site-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--white);
+            padding: 10px 40px;
+            box-shadow: 0 4px 10px rgba(11, 22, 58, 0.1);
+            border-bottom: 3px solid var(--gold);
+            position: relative;
+        }
+
+        /* Logo Styling */
+        .logo img {
+            height: 120px;
+            width: auto;
+            display: block;
+            border-radius: 30%;
+        }
+
+        /* Navigation Links */
+        .nav-menu ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-menu ul li {
+            position: relative;
+            margin-left: 30px;
+        }
+
+        .nav-menu ul li a {
+            text-decoration: none;
+            color: var(--navy-blue);
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 0;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu ul li a:hover {
+            color: var(--gold);
+        }
+
+        /* Submenu Styling for Desktop */
+        .nav-menu .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--white);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            list-style: none;
+            min-width: 300px;
+            display: none;
+            flex-direction: column;
+            border-top: 3px solid var(--gold);
+            border-radius: 0 0 4px 4px;
+            padding: 10px 0;
+            z-index: 100;
+        }
+
+        .nav-menu .submenu li {
+            margin: 0;
+            width: 100%;
+        }
+
+        .nav-menu .submenu li a {
+            padding: 10px 20px;
+            font-size: 14px;
+            color: var(--navy-blue);
+            white-space: normal;
+            font-weight: normal;
+        }
+
+        .nav-menu .submenu li a:hover {
+            background-color: var(--bg-light);
+            color: var(--gold);
+        }
+
+        /* Show Submenu on Hover (Desktop) */
+        .nav-menu .dropdown:hover .submenu {
+            display: flex;
+        }
+
+        /* Mobile Icons Hidden by Default */
+        .menu-toggle {
+            display: none;
+            font-size: 28px;
+            color: var(--navy-blue);
+            cursor: pointer;
+        }
+
+        .close-btn {
+            display: none;
+            font-size: 36px;
+            color: var(--white);
+            cursor: pointer;
+            text-align: right;
+            padding: 20px 20px 10px 20px;
+        }
+
+        /* --- Responsive CSS (Mobile View) --- */
+        @media (max-width: 992px) {
+            .site-header {
+                padding: 15px 20px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%; /* Default hidden */
+                width: 300px;
+                height: 100vh;
+                background-color: var(--navy-blue);
+                flex-direction: column;
+                transition: right 0.4s ease;
+                z-index: 999;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+                overflow-y: auto;
+            }
+
+            /* Active class to show menu */
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .close-btn {
+                display: block;
+            }
+
+            .nav-menu ul {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0 20px 30px 20px;
+                width: 100%;
+            }
+
+            .nav-menu ul li {
+                margin: 8px 0;
+                width: 100%;
+            }
+
+            .nav-menu ul li a {
+                color: var(--white);
+                font-size: 17px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 10px 0;
+            }
+
+            .nav-menu ul li a:hover {
+                color: var(--gold);
+            }
+
+            /* Submenu changes for mobile */
+            .nav-menu .submenu {
+                position: static;
+                display: none; /* JavaScript ya click se handle hoga */
+                background-color: rgba(255, 255, 255, 0.05);
+                box-shadow: none;
+                border: none;
+                padding-left: 15px;
+                min-width: 100%;
+                border-radius: 4px;
+                margin-top: 5px;
+            }
+
+            .nav-menu .submenu li a {
+                color: #d1d1d1;
+                font-size: 14px;
+                border-bottom: none;
+                padding: 8px 0;
+            }
+
+            .nav-menu .submenu li a:hover {
+                color: var(--gold);
+                background-color: transparent;
+            }
+
+            /* Mobile ke liye hover hata kar click ya active state use karenge */
+            .nav-menu .dropdown.open .submenu {
+                display: flex;
+            }
+        }
+
+        /* Footer Styling */
+        .site-footer {
+            background-color: var(--navy-blue);
+            color: var(--white);
+            padding: 50px 20px 20px 20px;
+            border-top: 4px solid var(--gold);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Footer Column Styling */
+        .footer-col h3 {
+            color: var(--gold);
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Logo & About Section */
+        .footer-logo img {
+            height: 70px;
+            width: auto;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .footer-col p {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* List Links Styling */
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            text-decoration: none;
+            color: var(--text-gray);
+            font-size: 14px;
+            transition: color 0.3s ease, padding-left 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--gold);
+            padding-left: 5px;
+        }
+
+        /* Contact Info Styling */
+        .footer-col .contact-info li {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Copyright Bar */
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            color: var(--text-gray);
+            font-size: 13px;
+            width: 100%;
+        }
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 768px) {
+            .site-footer {
+                padding: 40px 15px 15px 15px;
+            }
+            
+            .footer-container {
+                gap: 30px;
+            }
+        }
+
+        .product-box-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Product Card Styling */
+        .product-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(11, 22, 58, 0.12);
+            border-top: 4px solid var(--gold);
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(11, 22, 58, 0.2);
+        }
+
+        /* Image Section */
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background-color: #eaeaea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Content Section */
+        .product-content {
+            padding: 20px;
+        }
+
+        .product-title {
+            color: var(--navy-blue);
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        /* Order Now Button with WhatsApp Link */
+        .btn-order {
+            display: block;
+            width: 100%;
+            background-color: var(--gold);
+            color: var(--white);
+            font-size: 16px;
+            font-weight: bold;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(194, 155, 87, 0.3);
+        }
+
+        .btn-order:hover {
+            background-color: #a88344;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 480px) {
+            .product-card {
+                max-width: 100%;
+            }
+        }
+
+        .floating-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 0; /* Right se padding bilkul zero */
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Common Button Style */
+        .float-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50px 0 0 50px; /* Left side se round aur right side se flat taaki screen se chipka rahe */
+            color: #ffffff;
+            font-size: 22px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+
+        /* WhatsApp Button Style */
+        .whatsapp-float {
+            background-color: #25d366;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #1ebe5d;
+        }
+
+        /* Call Button Style */
+        .call-float {
+            background-color: #0b163a; /* Aapke brand ke Navy Blue color ke sath match kiya gaya hai */
+        }
+
+        .call-float:hover {
+            background-color: #14245c;
+        }
+
+        /* Icons SVG ya Symbol styling */
+        .float-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: #ffffff;
+        }
+
+        /* Responsive adjustments for mobile screens */
+        @media (max-width: 480px) {
+            .floating-buttons {
+                bottom: 20px;
+            }
+            .float-btn {
+                width: 45px;
+                height: 45px;
+            }
+            .float-btn svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="logo-container">
+            <a href="#" class="logo">
+                <img src="https://i.postimg.cc/tCVmHb1j/2162597d-cde6-4f36-9751-ef952a42a4c2-(1).jpg" alt="Khatri Fashions Logo">
+            </a>
+        </div>
+        
+        <!-- Hamburger Icon for Mobile -->
+        <div class="menu-toggle" id="mobile-menu-btn">
+            &#9776;
+        </div>
+
+        <nav class="nav-menu" id="nav-menu">
+            <!-- Cross Icon for Mobile -->
+            <div class="close-btn" id="close-btn">&times;</div>
+            
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown" id="dropdown-toggle">
+                    <a href="javascript:void(0);">Product ▾</a>
+                    <ul class="submenu">
+                        <li><a href="Heavy check knitted Roundneck pullover.html">Heavy check knitted Roundneck pullover</a></li>
+                        <li><a href="Roundneck hair pullover.html">Roundneck hair pullover</a></li>
+                        <li><a href="Premium knitted striper pullover.html">Premium knitted striper pullover</a></li>
+                        <li><a href="Collar Half zipper hair pullover.html">Collar Half zipper hair pullover</a></li>
+                        <li><a href="Trends premium pullover.html">Trends premium pullover</a></li>
+                    </ul>
+                </li>
+                <li><a href="abouyus.html">About Us</a></li>
+                <li><a href="contactus.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+<br><br><br><br>
+
+<div class="floating-buttons">
+        <!-- Call Button -->
+        <a href="tel:07009346634" class="float-btn call-float" title="Call Us">
+            <!-- Phone Icon SVG -->
+            <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        </a>
+
+        <!-- WhatsApp Button -->
+        <a href="https://wa.me/917009346634?text=Hello,%20I%20want%20to%20know%20more%20about%20your%20products" target="_blank" class="float-btn whatsapp-float" title="Chat on WhatsApp">
+            <!-- WhatsApp Icon SVG -->
+            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+        </a>
+    </div>
+   <div class="product-box-wrapper">
+        <div class="product-card">
+            <!-- Product Image -->
+            <div class="product-image">
+                <!-- Yahan apni product image ka tag lagayein e.g., <img src="image.jpg" alt="Product"> -->
+                <span><img src="https://i.postimg.cc/T1qMj5zf/Whats-App-Image-2026-09-18-at-4-25-59-PM-(2).jpg"></span>
+            </div>
+            <br><br><br><br>
+            <!-- Product Details & Button -->
+            <div class="product-content">
+                <h3 class="product-title">Roundneck hair pullover </h3>
+                
+                <!-- WhatsApp Order Now Button -->
+                <a href="https://wa.me/917009346634?text=Hello,%20I%20want%20to%20order%20Heavy%20check%20knitted%20Roundneck%20pullover" target="_blank" class="btn-order">Order Now on WhatsApp</a>
+            </div>
+        </div>
+    </div>
+
+<br><br><br><br>
+    <footer class="site-footer">
+        <div class="footer-container">
+            
+            <!-- Column 1: Logo & Description -->
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <img src="https://i.postimg.cc/pLdf4Fs7/2162597d-cde6-4f36-9751-ef952a42a4c2.jpg" alt="Khatri Fashions Logo">
+                </div>
+                <p>Khatri Fashions - Trusted Manufacturing & Wholesale partners delivering premium quality winter wear and pullovers.</p>
+            </div>
+
+            <!-- Column 2: Quick Links -->
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="abouyus.html">About Us</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="contactus.html">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Products (Saare sub-li yahan add kar diye gaye hain) -->
+            <div class="footer-col">
+                <h3>Our Products</h3>
+                <ul>
+                    <li><a href="Heavy check knitted Roundneck pullover.html">Heavy check knitted Roundneck pullover</a></li>
+                    <li><a href="Roundneck hair pullover.html">Roundneck hair pullover</a></li>
+                    <li><a href="Premium knitted striper pullover.html">Premium knitted striper pullover</a></li>
+                    <li><a href="Collar Half zipper hair pullover.html">Collar Half zipper hair pullover</a></li>
+                    <li><a href="Trends premium pullover.html">Trends premium pullover</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 4: Contact Information -->
+            <div class="footer-col">
+                <h3>Get in Touch</h3>
+                <ul class="contact-info">
+                    <li>📍 ludhiyana, India</li>
+                    <li>📞 +9170093 46634 </li>
+                    <li>✉️ info@khatrifashions.com</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- Footer Bottom Bar -->
+        <div class="footer-bottom">
+            <p>&copy; 2026 Khatri Fashions. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // DOM elements select karna
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navMenu = document.getElementById('nav-menu');
+        const closeBtn = document.getElementById('close-btn');
+        const dropdownToggle = document.getElementById('dropdown-toggle');
+
+        // Hamburger pe click karne par menu open karna
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.add('active');
+        });
+
+        // Cross (X) pe click karne par menu close karna
+        closeBtn.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+        });
+
+        // Mobile view me Product dropdown par click karne se submenu toggle ho
+        dropdownToggle.addEventListener('click', (e) => {
+            if (window.innerWidth <= 992) {
+                e.stopPropagation();
+                dropdownToggle.classList.toggle('open');
+            }
+        });
+    </script>
+</body>
+</html>
