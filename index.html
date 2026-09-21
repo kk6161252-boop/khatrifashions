@@ -5,616 +5,618 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Responsive Header - Khatri Fashions</title>
     <style>
-        /* Color Variables based on your Logo */
-        :root {
-            --navy-blue: #0b163a; 
-            --gold: #c29b57;
-            --bg-light: #f9f8f4;
-            --white: #ffffff;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-light);
-        }
-
-        /* Header Styling */
-        .site-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: var(--white);
-            padding: 10px 40px;
-            box-shadow: 0 4px 10px rgba(11, 22, 58, 0.1);
-            border-bottom: 3px solid var(--gold);
-            position: relative;
-        }
-
-        /* Logo Styling */
-        .logo img {
-            height: 120px;
-            width: auto;
-            display: block;
-            border-radius: 30%;
-        }
-
-        /* Navigation Links */
-        .nav-menu ul {
-            list-style: none;
-            display: flex;
-            align-items: center;
-        }
-
-        .nav-menu ul li {
-            position: relative;
-            margin-left: 30px;
-        }
-
-        .nav-menu ul li a {
-            text-decoration: none;
-            color: var(--navy-blue);
-            font-size: 16px;
-            font-weight: bold;
-            padding: 10px 0;
-            display: block;
-            transition: color 0.3s ease;
-        }
-
-        .nav-menu ul li a:hover {
-            color: var(--gold);
-        }
-
-        /* Submenu Styling for Desktop */
-        .nav-menu .submenu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: var(--white);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            list-style: none;
-            min-width: 300px;
-            display: none;
-            flex-direction: column;
-            border-top: 3px solid var(--gold);
-            border-radius: 0 0 4px 4px;
-            padding: 10px 0;
-            z-index: 100;
-        }
-
-        .nav-menu .submenu li {
-            margin: 0;
-            width: 100%;
-        }
-
-        .nav-menu .submenu li a {
-            padding: 10px 20px;
-            font-size: 14px;
-            color: var(--navy-blue);
-            white-space: normal;
-            font-weight: normal;
-        }
-
-        .nav-menu .submenu li a:hover {
-            background-color: var(--bg-light);
-            color: var(--gold);
-        }
-
-        /* Show Submenu on Hover (Desktop) */
-        .nav-menu .dropdown:hover .submenu {
-            display: flex;
-        }
-
-        /* Mobile Icons Hidden by Default */
-        .menu-toggle {
-            display: none;
-            font-size: 28px;
-            color: var(--navy-blue);
-            cursor: pointer;
-        }
-
-        .close-btn {
-            display: none;
-            font-size: 36px;
-            color: var(--white);
-            cursor: pointer;
-            text-align: right;
-            padding: 20px 20px 10px 20px;
-        }
-
-        /* --- Responsive CSS (Mobile View) --- */
-        @media (max-width: 992px) {
-            .site-header {
-                padding: 15px 20px;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
-
-            .nav-menu {
-                position: fixed;
-                top: 0;
-                right: -100%; /* Default hidden */
-                width: 300px;
-                height: 100vh;
-                background-color: var(--navy-blue);
-                flex-direction: column;
-                transition: right 0.4s ease;
-                z-index: 999;
-                box-shadow: -5px 0 15px rgba(0,0,0,0.3);
-                overflow-y: auto;
-            }
-
-            /* Active class to show menu */
-            .nav-menu.active {
-                right: 0;
-            }
-
-            .close-btn {
-                display: block;
-            }
-
-            .nav-menu ul {
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 0 20px 30px 20px;
-                width: 100%;
-            }
-
-            .nav-menu ul li {
-                margin: 8px 0;
-                width: 100%;
-            }
-
-            .nav-menu ul li a {
-                color: var(--white);
-                font-size: 17px;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-                padding: 10px 0;
-            }
-
-            .nav-menu ul li a:hover {
-                color: var(--gold);
-            }
-
-            /* Submenu changes for mobile */
-            .nav-menu .submenu {
-                position: static;
-                display: none; /* JavaScript ya click se handle hoga */
-                background-color: rgba(255, 255, 255, 0.05);
-                box-shadow: none;
-                border: none;
-                padding-left: 15px;
-                min-width: 100%;
-                border-radius: 4px;
-                margin-top: 5px;
-            }
-
-            .nav-menu .submenu li a {
-                color: #d1d1d1;
-                font-size: 14px;
-                border-bottom: none;
-                padding: 8px 0;
-            }
-
-            .nav-menu .submenu li a:hover {
-                color: var(--gold);
-                background-color: transparent;
-            }
-
-            /* Mobile ke liye hover hata kar click ya active state use karenge */
-            .nav-menu .dropdown.open .submenu {
-                display: flex;
-            }
-        }
-
-        /* Footer Styling */
-        .site-footer {
-            background-color: var(--navy-blue);
-            color: var(--white);
-            padding: 50px 20px 20px 20px;
-            border-top: 4px solid var(--gold);
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            padding-bottom: 40px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Footer Column Styling */
-        .footer-col h3 {
-            color: var(--gold);
-            font-size: 18px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Logo & About Section */
-        .footer-logo img {
-            height: 70px;
-            width: auto;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .footer-col p {
-            color: var(--text-gray);
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        /* List Links Styling */
-        .footer-col ul {
-            list-style: none;
-        }
-
-        .footer-col ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-col ul li a {
-            text-decoration: none;
-            color: var(--text-gray);
-            font-size: 14px;
-            transition: color 0.3s ease, padding-left 0.3s ease;
-            display: inline-block;
-        }
-
-        .footer-col ul li a:hover {
-            color: var(--gold);
-            padding-left: 5px;
-        }
-
-        /* Contact Info Styling */
-        .footer-col .contact-info li {
-            color: var(--text-gray);
-            font-size: 14px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-        }
-
-        /* Copyright Bar */
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-top: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            text-align: center;
-        }
-
-        .footer-bottom p {
-            color: var(--text-gray);
-            font-size: 13px;
-            width: 100%;
-        }
-
-        /* --- Responsive Adjustments --- */
-        @media (max-width: 768px) {
-            .site-footer {
-                padding: 40px 15px 15px 15px;
-            }
-            
-            .footer-container {
-                gap: 30px;
-            }
-        }
-        /* Products Section Container */
-        .products-section {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            color: var(--navy-blue);
-            font-size: 28px;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 3px solid var(--gold);
-            display: table;
-            margin-left: auto;
-            margin-right: auto;
-            padding-bottom: 10px;
-        }
-
-        /* Grid Layout for 3 Boxes */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        /* Individual Product Box */
-        .product-card {
-            background-color: var(--white);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(11, 22, 58, 0.1);
-            border-top: 4px solid var(--gold);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(11, 22, 58, 0.2);
-        }
-
-        /* Product Image Container */
-        .product-image {
-            width: 100%;
-            height: 220px;
-            background-color: #eaeaea;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #777;
-            font-size: 14px;
-        }
-
-        .product-image img {
-            width: 100%;
-            height: 500px;
-            object-fit: cover;
-        }
-
-        /* Product Content */
-        .product-content {
-            padding: 20px;
-            text-align: center;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .product-title {
-            color: var(--navy-blue);
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
-
-        /* Buttons Container */
-        .product-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 10px 15px;
-            font-size: 14px;
-            font-weight: bold;
-            text-decoration: none;
-            text-align: center;
-            border-radius: 4px;
-            transition: background 0.3s ease, color 0.3s ease;
-        }
-
-        /* View More Button Styling */
-        .btn-view {
-            background-color: transparent;
-            color: var(--navy-blue);
-            border: 2px solid var(--navy-blue);
-        }
-
-        .btn-view:hover {
-            background-color: var(--navy-blue);
-            color: var(--white);
-        }
-
-        /* Order Now (WhatsApp) Button Styling */
-        .btn-order {
-            background-color: var(--gold);
-            color: var(--white);
-            border: 2px solid var(--gold);
-        }
-
-        .btn-order:hover {
-            background-color: #a88344;
-            border-color: #a88344;
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 768px) {
-            .product-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .hero-section {
-            position: relative;
-            width: 100%;
-            height: 80vh;
-            min-height: 450px;
-            /* Yahan background image ka path dalein */
-            background-image: url('https://i.postimg.cc/qqLKZJyp/Whats-App-Image-2026-09-18-at-1-44-03-PM.jpg'); 
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 0 20px;
-        }
-
-        /* Dark Overlay taaki text clear dikhe */
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(11, 22, 58, 0.7), rgba(11, 22, 58, 0.85));
-            z-index: 1;
-        }
-
-        /* Hero Content Container */
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-        }
-
-        /* Tag Styling */
-        .hero-tag {
-            display: inline-block;
-            background-color: var(--gold);
-            color: var(--navy-blue);
-            font-size: 14px;
-            font-weight: bold;
-            padding: 6px 16px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-        }
-
-        /* Heading Styling */
-        .hero-title {
-            color: var(--white);
-            font-size: 42px;
-            font-weight: bold;
-            line-height: 1.3;
-            margin-bottom: 20px;
-        }
-
-        /* Description Paragraph */
-        .hero-description {
-            color: #e0e0e0;
-            font-size: 18px;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        /* Action Button */
-        .hero-btn {
-            display: inline-block;
-            background-color: var(--gold);
-            color: var(--navy-blue);
-            font-size: 16px;
-            font-weight: bold;
-            padding: 12px 30px;
-            border-radius: 4px;
-            text-decoration: none;
-            transition: background 0.3s ease, transform 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        .hero-btn:hover {
-            background-color: #d4ac65;
-            transform: translateY(-2px);
-        }
-
-        /* --- Responsive Media Queries --- */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 28px;
-            }
-
-            .hero-description {
-                font-size: 15px;
-            }
-
-            .hero-tag {
-                font-size: 12px;
-                padding: 4px 12px;
-            }
-
-            .hero-btn {
-                font-size: 14px;
-                padding: 10px 24px;
-            }
-        }
-
-        .floating-buttons {
-            position: fixed;
-            bottom: 30px;
-            right: 0; /* Right se padding bilkul zero */
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        /* Common Button Style */
-        .float-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            border-radius: 50px 0 0 50px; /* Left side se round aur right side se flat taaki screen se chipka rahe */
-            color: #ffffff;
-            font-size: 22px;
-            text-decoration: none;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-            transition: width 0.3s ease, background-color 0.3s ease;
-        }
-
-        /* WhatsApp Button Style */
-        .whatsapp-float {
-            background-color: #25d366;
-        }
-
-        .whatsapp-float:hover {
-            background-color: #1ebe5d;
-        }
-
-        /* Call Button Style */
-        .call-float {
-            background-color: #0b163a; /* Aapke brand ke Navy Blue color ke sath match kiya gaya hai */
-        }
-
-        .call-float:hover {
-            background-color: #14245c;
-        }
-
-        /* Icons SVG ya Symbol styling */
-        .float-btn svg {
-            width: 24px;
-            height: 24px;
-            fill: #ffffff;
-        }
-
-        /* Responsive adjustments for mobile screens */
-        @media (max-width: 480px) {
-            .floating-buttons {
-                bottom: 20px;
-            }
-            .float-btn {
-                width: 45px;
-                height: 45px;
-            }
-            .float-btn svg {
-                width: 20px;
-                height: 20px;
-            }
-        }
+       /* Color Variables based on Khatri Fashions Logo */
+:root {
+    --primary-blue: #0051cb;    /* Logo Blue */
+    --primary-green: #0b9a38;   /* Logo Green */
+    --primary-red: #e50914;     /* Logo Red */
+    --primary-yellow: #f19e00;  /* Logo Yellow/Orange */
+    --dark-text: #222222;       /* Logo Main Text / Dark Gray */
+    --bg-light: #f9f9f9;        /* Light Background */
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-light);
+}
+
+/* Header Styling */
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--white);
+    padding: 10px 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    border-bottom: 3px solid var(--primary-blue);
+    position: relative;
+}
+
+/* Logo Styling */
+.logo img {
+    height: 120px;
+    width: auto;
+    display: block;
+    border-radius: 30%;
+}
+
+/* Navigation Links */
+.nav-menu ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu ul li {
+    position: relative;
+    margin-left: 30px;
+}
+
+.nav-menu ul li a {
+    text-decoration: none;
+    color: var(--dark-text);
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 0;
+    display: block;
+    transition: color 0.3s ease;
+}
+
+.nav-menu ul li a:hover {
+    color: var(--primary-blue);
+}
+
+/* Submenu Styling for Desktop */
+.nav-menu .submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--white);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    list-style: none;
+    min-width: 300px;
+    display: none;
+    flex-direction: column;
+    border-top: 3px solid var(--primary-blue);
+    border-radius: 0 0 4px 4px;
+    padding: 10px 0;
+    z-index: 100;
+}
+
+.nav-menu .submenu li {
+    margin: 0;
+    width: 100%;
+}
+
+.nav-menu .submenu li a {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: var(--dark-text);
+    white-space: normal;
+    font-weight: normal;
+}
+
+.nav-menu .submenu li a:hover {
+    background-color: var(--bg-light);
+    color: var(--primary-blue);
+}
+
+/* Show Submenu on Hover (Desktop) */
+.nav-menu .dropdown:hover .submenu {
+    display: flex;
+}
+
+/* Mobile Icons Hidden by Default */
+.menu-toggle {
+    display: none;
+    font-size: 28px;
+    color: var(--dark-text);
+    cursor: pointer;
+}
+
+.close-btn {
+    display: none;
+    font-size: 36px;
+    color: var(--white);
+    cursor: pointer;
+    text-align: right;
+    padding: 20px 20px 10px 20px;
+}
+
+/* --- Responsive CSS (Mobile View) --- */
+@media (max-width: 992px) {
+    .site-header {
+        padding: 15px 20px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%; /* Default hidden */
+        width: 300px;
+        height: 100vh;
+        background-color: var(--dark-text);
+        flex-direction: column;
+        transition: right 0.4s ease;
+        z-index: 999;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+        overflow-y: auto;
+    }
+
+    /* Active class to show menu */
+    .nav-menu.active {
+        right: 0;
+    }
+
+    .close-btn {
+        display: block;
+    }
+
+    .nav-menu ul {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0 20px 30px 20px;
+        width: 100%;
+    }
+
+    .nav-menu ul li {
+        margin: 8px 0;
+        width: 100%;
+    }
+
+    .nav-menu ul li a {
+        color: var(--white);
+        font-size: 17px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 10px 0;
+    }
+
+    .nav-menu ul li a:hover {
+        color: var(--primary-yellow);
+    }
+
+    /* Submenu changes for mobile */
+    .nav-menu .submenu {
+        position: static;
+        display: none;
+        background-color: rgba(255, 255, 255, 0.05);
+        box-shadow: none;
+        border: none;
+        padding-left: 15px;
+        min-width: 100%;
+        border-radius: 4px;
+        margin-top: 5px;
+    }
+
+    .nav-menu .submenu li a {
+        color: #d1d1d1;
+        font-size: 14px;
+        border-bottom: none;
+        padding: 8px 0;
+    }
+
+    .nav-menu .submenu li a:hover {
+        color: var(--primary-yellow);
+        background-color: transparent;
+    }
+
+    .nav-menu .dropdown.open .submenu {
+        display: flex;
+    }
+}
+
+/* Footer Styling */
+.site-footer {
+    background-color: var(--dark-text);
+    color: var(--white);
+    padding: 50px 20px 20px 20px;
+    border-top: 4px solid var(--primary-blue);
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Footer Column Styling */
+.footer-col h3 {
+    color: var(--primary-yellow);
+    font-size: 18px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Logo & About Section */
+.footer-logo img {
+    height: 70px;
+    width: auto;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.footer-col p {
+    color: #cccccc;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+/* List Links Styling */
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+    text-decoration: none;
+    color: #cccccc;
+    font-size: 14px;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+    display: inline-block;
+}
+
+.footer-col ul li a:hover {
+    color: var(--primary-yellow);
+    padding-left: 5px;
+}
+
+/* Contact Info Styling */
+.footer-col .contact-info li {
+    color: #cccccc;
+    font-size: 14px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+}
+
+/* Copyright Bar */
+.footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.footer-bottom p {
+    color: #aaaaaa;
+    font-size: 13px;
+    width: 100%;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .site-footer {
+        padding: 40px 15px 15px 15px;
+    }
+    
+    .footer-container {
+        gap: 30px;
+    }
+}
+
+/* Products Section Container */
+.products-section {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    color: var(--dark-text);
+    font-size: 28px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 3px solid var(--primary-blue);
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 10px;
+}
+
+/* Grid Layout for Boxes */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* Individual Product Card */
+.product-card {
+    background-color: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border-top: 4px solid var(--primary-green);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Product Image Container */
+.product-image {
+    width: 100%;
+    height: 220px;
+    background-color: #eaeaea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+    font-size: 14px;
+}
+
+.product-image img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+}
+
+/* Product Content */
+.product-content {
+    padding: 20px;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-title {
+    color: var(--dark-text);
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+/* Buttons Container */
+.product-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn {
+    flex: 1;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 4px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* View More Button Styling */
+.btn-view {
+    background-color: transparent;
+    color: var(--primary-blue);
+    border: 2px solid var(--primary-blue);
+}
+
+.btn-view:hover {
+    background-color: var(--primary-blue);
+    color: var(--white);
+}
+
+/* Order Now (WhatsApp / Action) Button Styling */
+.btn-order {
+    background-color: var(--primary-green);
+    color: var(--white);
+    border: 2px solid var(--primary-green);
+}
+
+.btn-order:hover {
+    background-color: #087e2d;
+    border-color: #087e2d;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    min-height: 450px;
+    background-image: url('https://i.postimg.cc/qqLKZJyp/Whats-App-Image-2026-09-18-at-1-44-03-PM.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 20px;
+}
+
+/* Dark Overlay */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(17, 17, 17, 0.75), rgba(17, 17, 17, 0.88));
+    z-index: 1;
+}
+
+/* Hero Content Container */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+}
+
+/* Tag Styling */
+.hero-tag {
+    display: inline-block;
+    background-color: var(--primary-yellow);
+    color: var(--dark-text);
+    font-size: 14px;
+    font-weight: bold;
+    padding: 6px 16px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+/* Heading Styling */
+.hero-title {
+    color: var(--white);
+    font-size: 42px;
+    font-weight: bold;
+    line-height: 1.3;
+    margin-bottom: 20px;
+}
+
+/* Description Paragraph */
+.hero-description {
+    color: #e0e0e0;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* Action Button */
+.hero-btn {
+    display: inline-block;
+    background-color: var(--primary-red);
+    color: var(--white);
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 30px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.hero-btn:hover {
+    background-color: #c40711;
+    transform: translateY(-2px);
+}
+
+/* --- Responsive Media Queries --- */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 28px;
+    }
+
+    .hero-description {
+        font-size: 15px;
+    }
+
+    .hero-tag {
+        font-size: 12px;
+        padding: 4px 12px;
+    }
+
+    .hero-btn {
+        font-size: 14px;
+        padding: 10px 24px;
+    }
+}
+
+.floating-buttons {
+    position: fixed;
+    bottom: 30px;
+    right: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Common Button Style */
+.float-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px 0 0 50px;
+    color: #ffffff;
+    font-size: 22px;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+/* WhatsApp Button Style */
+.whatsapp-float {
+    background-color: #25d366;
+}
+
+.whatsapp-float:hover {
+    background-color: #1ebe5d;
+}
+
+/* Call Button Style */
+.call-float {
+    background-color: var(--primary-blue);
+}
+
+.call-float:hover {
+    background-color: #003fa3;
+}
+
+/* Icons SVG styling */
+.float-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: #ffffff;
+}
+
+/* Responsive adjustments for mobile screens */
+@media (max-width: 480px) {
+    .floating-buttons {
+        bottom: 20px;
+    }
+    .float-btn {
+        width: 45px;
+        height: 45px;
+    }
+    .float-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+}
     </style>
 </head>
 <body>
@@ -622,7 +624,7 @@
     <header class="site-header">
         <div class="logo-container">
             <a href="#" class="logo">
-                <img src="https://i.postimg.cc/tCVmHb1j/2162597d-cde6-4f36-9751-ef952a42a4c2-(1).jpg" alt="Khatri Fashions Logo">
+                <img src="https://i.postimg.cc/MTyNN9Sh/Whats-App-Image-2026-09-19-at-5-18-42-PM.jpg" alt="Khatri Fashions Logo">
             </a>
         </div>
         
@@ -690,6 +692,7 @@
                 </div>
                 <div class="product-content">
                     <h3 class="product-title"  style="margin-top: 170px;">Heavy check knitted Roundneck pullover</h3>
+                     <div style="margin-top: -150px;"><h4 class="product-title"  style="margin-top: 170px;">Price <br>210 Rs/pc</h4></div>
                     <div class="product-buttons">
                         <a href="view-more-1.html" class="btn btn-view">View More</a>
                         <a href="https://wa.me/917009346634?text=Hello,%20I%20want%20to%20order%20Heavy%20check%20knitted%20Roundneck%20pullover" target="_blank" class="btn btn-order">Order Now</a>
@@ -704,6 +707,7 @@
                 </div>
                 <div class="product-content">
                     <h3 class="product-title"  style="margin-top: 170px;">Roundneck hair pullover</h3>
+                    <div style="margin-top: -150px;"><h4 class="product-title"  style="margin-top: 170px;">Price <br>240 Rs/pc</h4></div>
                     <div class="product-buttons">
                         <a href="Roundneck hair pullover.html" class="btn btn-view">View More</a>
                         <a href="https://wa.me/917009346634?text=Hello,%20I%20want%20to%20order%20Roundneck%20hair%20pullover" target="_blank" class="btn btn-order">Order Now</a>
@@ -718,6 +722,7 @@
                 </div>
                 <div class="product-content">
                     <h3 class="product-title"  style="margin-top: 170px;">Premium knitted striper pullover</h3>
+                    <div style="margin-top: -150px;"><h4 class="product-title"  style="margin-top: 170px;">Price <br>210 Rs/pc</h4></div>
                     <div class="product-buttons">
                         <a href="Premium knitted striper pullover.html" class="btn btn-view">View More</a>
                         <a href="https://wa.me/917009346634?text=Hello,%20I%20want%20to%20order%20Premium%20knitted%20striper%20pullover" target="_blank" class="btn btn-order">Order Now</a>
@@ -741,7 +746,7 @@
                 </div>
                 <div class="product-content">
                     <h3 class="product-title" style="margin-top: 170px;">Soft and warm hair pullover </h3>
-                    <div class="product-buttons">
+                    <div style="margin-top: -150px;"><h4 class="product-title"  style="margin-top: 170px;">Price <br>250 Rs/pc</h4></div><div class="product-buttons">
                         <a href="Heavy check knitted Roundneck pullover.html" class="btn btn-view">View More</a>
                         <a href="https://wa.me/917009346634?text=Hello,%20I%20want%20to%20order%20Heavy%20check%20knitted%20Roundneck%20pullover" target="_blank" class="btn btn-order">Order Now</a>
                     </div>
@@ -755,7 +760,7 @@
                 </div>
                 <div class="product-content">
                     <h3 class="product-title" style="margin-top: 170px;">Collar Half zipper hair pullover</h3>
-                    <div class="product-buttons">
+                    <div style="margin-top: -150px;"><h4 class="product-title"  style="margin-top: 170px;">Price <br>250 Rs/pc</h4></div><div class="product-buttons">
                         <a href="Roundneck hair pullover.html" class="btn btn-view">View More</a>
                         <a href="https://wa.me/917009346634?text=Hello,%20I%20want%20to%20order%20Roundneck%20hair%20pullover" target="_blank" class="btn btn-order">Order Now</a>
                     </div>
@@ -769,7 +774,7 @@
                 </div>
                 <div class="product-content">
                     <h3 class="product-title" style="margin-top: 170px;">Trends premium pullover </h3>
-                    <div class="product-buttons">
+                   <div style="margin-top: -150px;"><h4 class="product-title"  style="margin-top: 170px;">Price <br>210 Rs/pc</h4></div> <div class="product-buttons">
                         <a href="view-more-3.html" class="btn btn-view">View More</a>
                         <a href="https://wa.me/917009346634?text=Hello,%20I%20want%20to%20order%20Premium%20knitted%20striper%20pullover" target="_blank" class="btn btn-order">Order Now</a>
                     </div>
@@ -785,7 +790,7 @@
             <!-- Column 1: Logo & Description -->
             <div class="footer-col">
                 <div class="footer-logo">
-                    <img src="https://i.postimg.cc/pLdf4Fs7/2162597d-cde6-4f36-9751-ef952a42a4c2.jpg" alt="Khatri Fashions Logo">
+                    <img src="https://i.postimg.cc/MTyNN9Sh/Whats-App-Image-2026-09-19-at-5-18-42-PM.jpg" alt="Khatri Fashions Logo">
                 </div>
                 <p>Khatri Fashions - Trusted Manufacturing & Wholesale partners delivering premium quality winter wear and pullovers.</p>
             </div>
